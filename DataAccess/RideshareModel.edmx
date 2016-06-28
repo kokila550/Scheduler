@@ -1,0 +1,352 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="rideshareModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.6" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tbl_booking">
+          <Key>
+            <PropertyRef Name="bk_id" />
+          </Key>
+          <Property Name="bk_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="bk_time" Type="datetime" Precision="0" />
+          <Property Name="bk_status" Type="varchar" MaxLength="10" />
+          <Property Name="bk_cusid" Type="int" />
+          <Property Name="bk_driverid" Type="int" />
+          <Property Name="bk_vehidid" Type="int" />
+          <Property Name="bk_startloc" Type="varchar" MaxLength="45" />
+          <Property Name="bk_endloc" Type="varchar" MaxLength="45" />
+          <Property Name="active" Type="varchar" MaxLength="1" />
+        </EntityType>
+        <EntityType Name="tbl_customer">
+          <Key>
+            <PropertyRef Name="cusid" />
+          </Key>
+          <Property Name="cusid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="cus_fname" Type="varchar" MaxLength="100" />
+          <Property Name="cus_lname" Type="varchar" MaxLength="100" />
+          <Property Name="cus_phoneno" Type="varchar" MaxLength="45" />
+          <Property Name="cus_email" Type="varchar" MaxLength="45" />
+          <Property Name="cus_password" Type="varchar" MaxLength="45" />
+          <Property Name="active" Type="varchar" MaxLength="1" />
+        </EntityType>
+        <EntityType Name="tbl_driver">
+          <Key>
+            <PropertyRef Name="dri_id" />
+          </Key>
+          <Property Name="dri_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="dri_fname" Type="varchar" MaxLength="45" />
+          <Property Name="dri_lname" Type="varchar" MaxLength="45" />
+          <Property Name="dri_address" Type="varchar" MaxLength="100" />
+          <Property Name="dri_licence" Type="varchar" MaxLength="10" />
+          <Property Name="dri_nic" Type="varchar" MaxLength="10" />
+          <Property Name="dri_password" Type="varchar" MaxLength="45" />
+          <Property Name="active" Type="varchar" MaxLength="1" />
+          <Property Name="dri_phoneno" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="tbl_vehicle">
+          <Key>
+            <PropertyRef Name="veh_id" />
+          </Key>
+          <Property Name="veh_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="veh_regno" Type="varchar" MaxLength="45" />
+          <Property Name="veh_type" Type="varchar" MaxLength="45" />
+          <Property Name="veh_description" Type="varchar" MaxLength="45" />
+          <Property Name="veh_location" Type="varchar" MaxLength="45" />
+          <Property Name="veh_driverid" Type="int" />
+          <Property Name="veh_custrequest" Type="varchar" MaxLength="45" />
+          <Property Name="active" Type="varchar" MaxLength="1" />
+        </EntityType>
+        <Association Name="tbl_booking_ibfk_1">
+          <End Role="tbl_driver" Type="Self.tbl_driver" Multiplicity="0..1" />
+          <End Role="tbl_booking" Type="Self.tbl_booking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_driver">
+              <PropertyRef Name="dri_id" />
+            </Principal>
+            <Dependent Role="tbl_booking">
+              <PropertyRef Name="bk_driverid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="tbl_booking_ibfk_2">
+          <End Role="tbl_vehicle" Type="Self.tbl_vehicle" Multiplicity="0..1" />
+          <End Role="tbl_booking" Type="Self.tbl_booking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_vehicle">
+              <PropertyRef Name="veh_id" />
+            </Principal>
+            <Dependent Role="tbl_booking">
+              <PropertyRef Name="bk_vehidid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="tbl_booking_ibfk_3">
+          <End Role="tbl_customer" Type="Self.tbl_customer" Multiplicity="0..1" />
+          <End Role="tbl_booking" Type="Self.tbl_booking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_customer">
+              <PropertyRef Name="cusid" />
+            </Principal>
+            <Dependent Role="tbl_booking">
+              <PropertyRef Name="bk_cusid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="tbl_vehicle_ibfk_1">
+          <End Role="tbl_driver" Type="Self.tbl_driver" Multiplicity="0..1" />
+          <End Role="tbl_vehicle" Type="Self.tbl_vehicle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_driver">
+              <PropertyRef Name="dri_id" />
+            </Principal>
+            <Dependent Role="tbl_vehicle">
+              <PropertyRef Name="veh_driverid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="rideshareModelStoreContainer">
+          <EntitySet Name="tbl_booking" EntityType="Self.tbl_booking" Schema="rideshare" store:Type="Tables" />
+          <EntitySet Name="tbl_customer" EntityType="Self.tbl_customer" Schema="rideshare" store:Type="Tables" />
+          <EntitySet Name="tbl_driver" EntityType="Self.tbl_driver" Schema="rideshare" store:Type="Tables" />
+          <EntitySet Name="tbl_vehicle" EntityType="Self.tbl_vehicle" Schema="rideshare" store:Type="Tables" />
+          <AssociationSet Name="tbl_booking_ibfk_1" Association="Self.tbl_booking_ibfk_1">
+            <End Role="tbl_driver" EntitySet="tbl_driver" />
+            <End Role="tbl_booking" EntitySet="tbl_booking" />
+          </AssociationSet>
+          <AssociationSet Name="tbl_booking_ibfk_2" Association="Self.tbl_booking_ibfk_2">
+            <End Role="tbl_vehicle" EntitySet="tbl_vehicle" />
+            <End Role="tbl_booking" EntitySet="tbl_booking" />
+          </AssociationSet>
+          <AssociationSet Name="tbl_booking_ibfk_3" Association="Self.tbl_booking_ibfk_3">
+            <End Role="tbl_customer" EntitySet="tbl_customer" />
+            <End Role="tbl_booking" EntitySet="tbl_booking" />
+          </AssociationSet>
+          <AssociationSet Name="tbl_vehicle_ibfk_1" Association="Self.tbl_vehicle_ibfk_1">
+            <End Role="tbl_driver" EntitySet="tbl_driver" />
+            <End Role="tbl_vehicle" EntitySet="tbl_vehicle" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="rideshareModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="tbl_booking">
+          <Key>
+            <PropertyRef Name="bk_id" />
+          </Key>
+          <Property Name="bk_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="bk_time" Type="DateTime" />
+          <Property Name="bk_status" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="bk_cusid" Type="Int32" />
+          <Property Name="bk_driverid" Type="Int32" />
+          <Property Name="bk_vehidid" Type="Int32" />
+          <Property Name="bk_startloc" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="bk_endloc" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="active" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tbl_driver" Relationship="Self.tbl_booking_ibfk_1" FromRole="tbl_booking" ToRole="tbl_driver" />
+          <NavigationProperty Name="tbl_vehicle" Relationship="Self.tbl_booking_ibfk_2" FromRole="tbl_booking" ToRole="tbl_vehicle" />
+          <NavigationProperty Name="tbl_customer" Relationship="Self.tbl_booking_ibfk_3" FromRole="tbl_booking" ToRole="tbl_customer" />
+        </EntityType>
+        <EntityType Name="tbl_customer">
+          <Key>
+            <PropertyRef Name="cusid" />
+          </Key>
+          <Property Name="cusid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="cus_fname" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="cus_lname" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="cus_phoneno" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="cus_email" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="cus_password" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="active" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tbl_booking" Relationship="Self.tbl_booking_ibfk_3" FromRole="tbl_customer" ToRole="tbl_booking" />
+        </EntityType>
+        <EntityType Name="tbl_driver">
+          <Key>
+            <PropertyRef Name="dri_id" />
+          </Key>
+          <Property Name="dri_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="dri_fname" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="dri_lname" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="dri_address" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="dri_licence" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="dri_nic" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="dri_password" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="active" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tbl_booking" Relationship="Self.tbl_booking_ibfk_1" FromRole="tbl_driver" ToRole="tbl_booking" />
+          <NavigationProperty Name="tbl_vehicle" Relationship="Self.tbl_vehicle_ibfk_1" FromRole="tbl_driver" ToRole="tbl_vehicle" />
+          <Property Name="dri_phoneno" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="tbl_vehicle">
+          <Key>
+            <PropertyRef Name="veh_id" />
+          </Key>
+          <Property Name="veh_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="veh_regno" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="veh_type" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="veh_description" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="veh_location" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="veh_driverid" Type="Int32" />
+          <Property Name="veh_custrequest" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="active" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tbl_booking" Relationship="Self.tbl_booking_ibfk_2" FromRole="tbl_vehicle" ToRole="tbl_booking" />
+          <NavigationProperty Name="tbl_driver" Relationship="Self.tbl_vehicle_ibfk_1" FromRole="tbl_vehicle" ToRole="tbl_driver" />
+        </EntityType>
+        <Association Name="tbl_booking_ibfk_1">
+          <End Role="tbl_driver" Type="Self.tbl_driver" Multiplicity="0..1" />
+          <End Role="tbl_booking" Type="Self.tbl_booking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_driver">
+              <PropertyRef Name="dri_id" />
+            </Principal>
+            <Dependent Role="tbl_booking">
+              <PropertyRef Name="bk_driverid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="tbl_booking_ibfk_2">
+          <End Role="tbl_vehicle" Type="Self.tbl_vehicle" Multiplicity="0..1" />
+          <End Role="tbl_booking" Type="Self.tbl_booking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_vehicle">
+              <PropertyRef Name="veh_id" />
+            </Principal>
+            <Dependent Role="tbl_booking">
+              <PropertyRef Name="bk_vehidid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="tbl_booking_ibfk_3">
+          <End Role="tbl_customer" Type="Self.tbl_customer" Multiplicity="0..1" />
+          <End Role="tbl_booking" Type="Self.tbl_booking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_customer">
+              <PropertyRef Name="cusid" />
+            </Principal>
+            <Dependent Role="tbl_booking">
+              <PropertyRef Name="bk_cusid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="tbl_vehicle_ibfk_1">
+          <End Role="tbl_driver" Type="Self.tbl_driver" Multiplicity="0..1" />
+          <End Role="tbl_vehicle" Type="Self.tbl_vehicle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_driver">
+              <PropertyRef Name="dri_id" />
+            </Principal>
+            <Dependent Role="tbl_vehicle">
+              <PropertyRef Name="veh_driverid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="rideshareEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tbl_booking" EntityType="Self.tbl_booking" />
+          <EntitySet Name="tbl_customer" EntityType="Self.tbl_customer" />
+          <EntitySet Name="tbl_driver" EntityType="Self.tbl_driver" />
+          <EntitySet Name="tbl_vehicle" EntityType="Self.tbl_vehicle" />
+          <AssociationSet Name="tbl_booking_ibfk_1" Association="Self.tbl_booking_ibfk_1">
+            <End Role="tbl_driver" EntitySet="tbl_driver" />
+            <End Role="tbl_booking" EntitySet="tbl_booking" />
+          </AssociationSet>
+          <AssociationSet Name="tbl_booking_ibfk_2" Association="Self.tbl_booking_ibfk_2">
+            <End Role="tbl_vehicle" EntitySet="tbl_vehicle" />
+            <End Role="tbl_booking" EntitySet="tbl_booking" />
+          </AssociationSet>
+          <AssociationSet Name="tbl_booking_ibfk_3" Association="Self.tbl_booking_ibfk_3">
+            <End Role="tbl_customer" EntitySet="tbl_customer" />
+            <End Role="tbl_booking" EntitySet="tbl_booking" />
+          </AssociationSet>
+          <AssociationSet Name="tbl_vehicle_ibfk_1" Association="Self.tbl_vehicle_ibfk_1">
+            <End Role="tbl_driver" EntitySet="tbl_driver" />
+            <End Role="tbl_vehicle" EntitySet="tbl_vehicle" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="rideshareModelStoreContainer" CdmEntityContainer="rideshareEntities">
+          <EntitySetMapping Name="tbl_booking">
+            <EntityTypeMapping TypeName="rideshareModel.tbl_booking">
+              <MappingFragment StoreEntitySet="tbl_booking">
+                <ScalarProperty Name="bk_id" ColumnName="bk_id" />
+                <ScalarProperty Name="bk_time" ColumnName="bk_time" />
+                <ScalarProperty Name="bk_status" ColumnName="bk_status" />
+                <ScalarProperty Name="bk_cusid" ColumnName="bk_cusid" />
+                <ScalarProperty Name="bk_driverid" ColumnName="bk_driverid" />
+                <ScalarProperty Name="bk_vehidid" ColumnName="bk_vehidid" />
+                <ScalarProperty Name="bk_startloc" ColumnName="bk_startloc" />
+                <ScalarProperty Name="bk_endloc" ColumnName="bk_endloc" />
+                <ScalarProperty Name="active" ColumnName="active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_customer">
+            <EntityTypeMapping TypeName="rideshareModel.tbl_customer">
+              <MappingFragment StoreEntitySet="tbl_customer">
+                <ScalarProperty Name="cusid" ColumnName="cusid" />
+                <ScalarProperty Name="cus_fname" ColumnName="cus_fname" />
+                <ScalarProperty Name="cus_lname" ColumnName="cus_lname" />
+                <ScalarProperty Name="cus_phoneno" ColumnName="cus_phoneno" />
+                <ScalarProperty Name="cus_email" ColumnName="cus_email" />
+                <ScalarProperty Name="cus_password" ColumnName="cus_password" />
+                <ScalarProperty Name="active" ColumnName="active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_driver">
+            <EntityTypeMapping TypeName="rideshareModel.tbl_driver">
+              <MappingFragment StoreEntitySet="tbl_driver">
+                <ScalarProperty Name="dri_phoneno" ColumnName="dri_phoneno" />
+                <ScalarProperty Name="dri_id" ColumnName="dri_id" />
+                <ScalarProperty Name="dri_fname" ColumnName="dri_fname" />
+                <ScalarProperty Name="dri_lname" ColumnName="dri_lname" />
+                <ScalarProperty Name="dri_address" ColumnName="dri_address" />
+                <ScalarProperty Name="dri_licence" ColumnName="dri_licence" />
+                <ScalarProperty Name="dri_nic" ColumnName="dri_nic" />
+                <ScalarProperty Name="dri_password" ColumnName="dri_password" />
+                <ScalarProperty Name="active" ColumnName="active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_vehicle">
+            <EntityTypeMapping TypeName="rideshareModel.tbl_vehicle">
+              <MappingFragment StoreEntitySet="tbl_vehicle">
+                <ScalarProperty Name="veh_id" ColumnName="veh_id" />
+                <ScalarProperty Name="veh_regno" ColumnName="veh_regno" />
+                <ScalarProperty Name="veh_type" ColumnName="veh_type" />
+                <ScalarProperty Name="veh_description" ColumnName="veh_description" />
+                <ScalarProperty Name="veh_location" ColumnName="veh_location" />
+                <ScalarProperty Name="veh_driverid" ColumnName="veh_driverid" />
+                <ScalarProperty Name="veh_custrequest" ColumnName="veh_custrequest" />
+                <ScalarProperty Name="active" ColumnName="active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
