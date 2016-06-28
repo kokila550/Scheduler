@@ -37,7 +37,14 @@ namespace Applicaion_Service
             AccessData ad = new AccessData();
             return ad.GetTaxiList();
         }
-       
+
+        public string Updateuser(string address, string nic, string phoneno, string fname, string lname, string vehicleno, string licenceno)
+        {
+            AccessData ad = new AccessData();
+            return ad.Updateuser(address, nic, phoneno, fname, lname, vehicleno, licenceno);
+        }
+
+
 
 
     }

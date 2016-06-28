@@ -31,6 +31,10 @@ namespace Applicaion_Service
         [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json, UriTemplate = "GetCars/")]
         List<VehicleInfo> GetTaxiList();
 
+        [OperationContract]
+        [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json, UriTemplate = "UpdateUser/{address}/{nic}/{phoneno}/{fname}/{lname}/{vehicleno}/{licenceno}")]
+        string Updateuser(string address, string nic, string phoneno, string fname, string lname, string vehicleno, string licenceno);
+
 
     }
 }
