@@ -20,17 +20,23 @@ namespace DataAccess
 
              //   var a = (from c in entities.tbl_customer where v.cus_email == username && v.cus_password = password select 1);
                 var isprecent = (from c in entities.tbl_customer where (c.cus_email == username && c.cus_password == password) select 1).ToList();
-                       
 
 
-                
+
+                if (isprecent.Capacity <1)
+                {
+                    userlogin.Add(new UserLogin()
+                    {
+                        Loginstatus = "0"
+                        
+                    });
+                }
                 foreach (var k in isprecent)
                 {
                     userlogin.Add(new UserLogin()
                     {
                         Loginstatus = "1"
                       
-
                     });
                 }
                 return userlogin; ;
@@ -63,7 +69,7 @@ namespace DataAccess
 
         //Register Customer
         public List<RegisterStatus> RegisterCustomer(string phoneno, string email, string fname, string lname, string password)
-        {
+            {
             var registerstatus = new List<RegisterStatus>();
             using (rideshareEntities entities = new rideshareEntities())
             {
@@ -77,9 +83,8 @@ namespace DataAccess
                     {
                         registerstatus.Add(new RegisterStatus()
                         {
-                            registration = "Email Already Exist"
-
-
+                            registration = "0"
+                            
                         });
                         return registerstatus; ;
 
@@ -96,7 +101,7 @@ namespace DataAccess
                     entities.SaveChanges();
                     registerstatus.Add(new RegisterStatus()
                     {
-                        registration = "Registration Succsess"
+                        registration = "1"
 
 
                     });
