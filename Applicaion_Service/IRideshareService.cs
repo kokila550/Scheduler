@@ -13,19 +13,19 @@ namespace Applicaion_Service
     [ServiceContract]
     public interface IRideshareService
     {
-  
+
 
         [OperationContract]
-        [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json, UriTemplate = "Auth/{phoneno}")]
-        int Login(string phoneno);
+        [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json, UriTemplate = "Auth/{username}/{password}")]
+        List<UserLogin> Login(string username, string password);
 
         [OperationContract]
-        [WebInvoke(Method = "GET", UriTemplate = "AddUser/{phoneno},{email},{fname},{lname},{password}")]
-        string RegisterCustomer(string phoneno, string email, string fname, string lname, string password);
+        [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json, UriTemplate = "AddUser/{phoneno}/{email}/{fname}/{lname}/{password}")]
+        List<RegisterStatus> RegisterCustomer(string phoneno, string email, string fname, string lname, string password);
 
         [OperationContract]
         [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json, UriTemplate = "AuthDriver/{phoneno}/{password}")]
-        int LoginDriver(string phoneno, string password);
+        List<LoginDriver> DriverLogin(string phoneno, string password);
 
         [OperationContract]
         [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json, UriTemplate = "GetCars/")]

@@ -12,25 +12,31 @@ namespace Applicaion_Service
      
     public class RideshareService : IRideshareService
     {
-        public int Login(string phoneno)
+        public List<UserLogin> Login(string username, string password)
         {
 
             AccessData ad  = new AccessData();
-            return ad.Login(phoneno);
+            return ad.Login(username, password);
         }
 
-
-        public string RegisterCustomer(string phoneno, string email, string fname, string lname, string password)
+   
+        public List<RegisterStatus> RegisterCustomer(string phoneno, string email, string fname, string lname, string password)
         {
             AccessData ad = new AccessData();
             return ad.RegisterCustomer(phoneno, email, fname, lname, password);
         }
 
-        public int LoginDriver(string phoneno, string password)
+        public List<LoginDriver> DriverLogin(string phoneno, string password)
         {
             AccessData ad = new AccessData();
-            return ad.LoginDriver(phoneno, password);
+            return ad.DriverLogin(phoneno, password);
         }
+
+        //public int LoginDriver(string phoneno, string password)
+        //{
+        //    AccessData ad = new AccessData();
+        //    return ad.DriverLogin(phoneno, password);
+        //}
 
         public List<VehicleInfo> GetTaxiList()
         {

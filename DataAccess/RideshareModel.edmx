@@ -57,6 +57,8 @@
           <Property Name="veh_driverid" Type="int" />
           <Property Name="veh_custrequest" Type="varchar" MaxLength="45" />
           <Property Name="active" Type="varchar" MaxLength="1" />
+          <Property Name="veh_Latitude" Type="varchar" MaxLength="45" />
+          <Property Name="veh_Longitude" Type="varchar" MaxLength="45" />
         </EntityType>
         <Association Name="tbl_booking_ibfk_1">
           <End Role="tbl_driver" Type="Self.tbl_driver" Multiplicity="0..1" />
@@ -192,6 +194,8 @@
           <Property Name="active" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="tbl_booking" Relationship="Self.tbl_booking_ibfk_2" FromRole="tbl_vehicle" ToRole="tbl_booking" />
           <NavigationProperty Name="tbl_driver" Relationship="Self.tbl_vehicle_ibfk_1" FromRole="tbl_vehicle" ToRole="tbl_driver" />
+          <Property Name="veh_Latitude" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="veh_Longitude" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="tbl_booking_ibfk_1">
           <End Role="tbl_driver" Type="Self.tbl_driver" Multiplicity="0..1" />
@@ -315,6 +319,8 @@
           <EntitySetMapping Name="tbl_vehicle">
             <EntityTypeMapping TypeName="rideshareModel.tbl_vehicle">
               <MappingFragment StoreEntitySet="tbl_vehicle">
+                <ScalarProperty Name="veh_Longitude" ColumnName="veh_Longitude" />
+                <ScalarProperty Name="veh_Latitude" ColumnName="veh_Latitude" />
                 <ScalarProperty Name="veh_id" ColumnName="veh_id" />
                 <ScalarProperty Name="veh_regno" ColumnName="veh_regno" />
                 <ScalarProperty Name="veh_type" ColumnName="veh_type" />

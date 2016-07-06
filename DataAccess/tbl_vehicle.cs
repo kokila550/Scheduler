@@ -27,6 +27,8 @@ namespace DataAccess
         public Nullable<int> veh_driverid { get; set; }
         public string veh_custrequest { get; set; }
         public string active { get; set; }
+        public string veh_Latitude { get; set; }
+        public string veh_Longitude { get; set; }
     
         public virtual ICollection<tbl_booking> tbl_booking { get; set; }
         public virtual tbl_driver tbl_driver { get; set; }
