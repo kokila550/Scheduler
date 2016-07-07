@@ -44,6 +44,7 @@
           <Property Name="dri_password" Type="varchar" MaxLength="45" />
           <Property Name="active" Type="varchar" MaxLength="1" />
           <Property Name="dri_phoneno" Type="varchar" MaxLength="10" />
+          <Property Name="dri_status" Type="varchar" MaxLength="45" />
         </EntityType>
         <EntityType Name="tbl_vehicle">
           <Key>
@@ -179,6 +180,7 @@
           <NavigationProperty Name="tbl_booking" Relationship="Self.tbl_booking_ibfk_1" FromRole="tbl_driver" ToRole="tbl_booking" />
           <NavigationProperty Name="tbl_vehicle" Relationship="Self.tbl_vehicle_ibfk_1" FromRole="tbl_driver" ToRole="tbl_vehicle" />
           <Property Name="dri_phoneno" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="dri_status" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="tbl_vehicle">
           <Key>
@@ -304,6 +306,7 @@
           <EntitySetMapping Name="tbl_driver">
             <EntityTypeMapping TypeName="rideshareModel.tbl_driver">
               <MappingFragment StoreEntitySet="tbl_driver">
+                <ScalarProperty Name="dri_status" ColumnName="dri_status" />
                 <ScalarProperty Name="dri_phoneno" ColumnName="dri_phoneno" />
                 <ScalarProperty Name="dri_id" ColumnName="dri_id" />
                 <ScalarProperty Name="dri_fname" ColumnName="dri_fname" />

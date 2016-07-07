@@ -29,6 +29,7 @@ namespace DataAccess
         public string dri_password { get; set; }
         public string active { get; set; }
         public string dri_phoneno { get; set; }
+        public string dri_status { get; set; }
     
         public virtual ICollection<tbl_booking> tbl_booking { get; set; }
         public virtual ICollection<tbl_vehicle> tbl_vehicle { get; set; }

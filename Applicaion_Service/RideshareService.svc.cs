@@ -52,6 +52,14 @@ namespace Applicaion_Service
 
 
 
+        public List<DriverStatus> UpdateDriverStatus(string driid, string status, string Latitude, string Longitud)
+        {
+            AccessData ad = new AccessData();
+            return ad.UpdateDriverStatus(driid, status , Latitude, Longitud);
+        }
+
+
+
 
     }
 }

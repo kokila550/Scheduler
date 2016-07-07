@@ -31,5 +31,13 @@ namespace DataAccess
     {
         public string  loginstatus{ get; set; }
     }
-   
+
+    public class DriverStatus
+    {
+        
+        public string updatestatus { get; set; }
+        public string Longitud { get; set; }
+        public string Latitude { get; set; }
+}
+
 }

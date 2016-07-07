@@ -118,19 +118,28 @@ namespace DataAccess
             using (rideshareEntities entities = new rideshareEntities())
             {
                 var driverlogin = new List<LoginDriver>();
-                var a = (from c in entities.tbl_driver where (c.dri_phoneno == phoneno &&  c.dri_password == password) select 1);
+                var a = (from c in entities.tbl_driver where (c.dri_phoneno == phoneno &&  c.dri_password == password) select c.dri_id).ToList();
                // var isprecent = from d in entities.tbl_driver where d.dri_phoneno == phoneno && d.dri_password == password select 1;
                 var firstOrDefault = a.FirstOrDefault();
 
-                foreach (var k in a)
+                if (a.Count == 1)
+                {
+                    foreach (var k in a)
+                    {
+                        driverlogin.Add(new LoginDriver()
+                        {
+                            loginstatus = firstOrDefault.ToString()
+                        });
+                    }
+                }
+                else
                 {
                     driverlogin.Add(new LoginDriver()
                     {
-                        loginstatus = "1"
-
-
+                        loginstatus = "0"
                     });
                 }
+                   
                 return driverlogin; ;
 
             }
@@ -343,6 +352,43 @@ namespace DataAccess
 
                 throw;
             }
+
+        }
+
+
+        //Update Driver Status
+        public List<DriverStatus> UpdateDriverStatus(string driid,  string status , string Latitude, string Longitud)
+        {
+            var driverstatus = new List<DriverStatus>();
+            try
+            {
+
+                using (rideshareEntities entities = new rideshareEntities())
+                {
+                    int driverid = Convert.ToInt32(driid);
+                    tbl_driver driver = entities.tbl_driver.SingleOrDefault(dri => dri.dri_id == driverid);
+                    tbl_vehicle vehicle = entities.tbl_vehicle.SingleOrDefault(dri => dri.veh_driverid == driverid);
+                    driver.dri_status = status;
+                    vehicle.veh_Latitude = Latitude;
+                    vehicle.veh_Longitude = Longitud;
+
+                    entities.SaveChanges();
+                    driverstatus.Add(new DriverStatus
+                    {
+                        updatestatus = "1"
+                        
+                    });
+                }
+            }
+            catch (Exception)
+            {
+                driverstatus.Add(new DriverStatus
+                {
+                    updatestatus = "0"
+                });
+                //throw;
+            }
+            return driverstatus; ;
 
         }
     }  
